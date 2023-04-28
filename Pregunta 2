@@ -1,1 +1,24 @@
-%Se colocaran los codigos de las pregutnas del examen final
+<div class="form-group">
+    <label for="nombreUsuario">Nombre:</label>
+    <input type="text" class="form-control" id="nombreUsuario" value="{{ usuario.first_name }}" readonly>
+</div>
+<div class="form-group">
+    <label for="apellidoUsuario">Apellido:</label>
+    <input type="text" class="form-control" id="apellidoUsuario" value="{{ usuario.last_name }}" readonly>
+</div>
+<div class="form-group">
+    <label for="emailUsuario">Email:</label>
+    <input type="email" class="form-control" id="emailUsuario" value="{{ usuario.email }}" readonly>
+</div>
+<div class="form-group">
+    <label for="fechaIngreso">Fecha de ingreso:</label>
+    <input type="text" class="form-control" id="fechaIngreso" value="{{ usuario.datosusuario.fechaIngreso }}" readonly>
+</div>
+<div class="form-group">
+    <label for="profesionUsuario">Profesión:</label>
+    <input type="text" class="form-control" id="profesionUsuario" value="{{ usuario.datosusuario.profesionUsuario }}" >
+</div>
+<div class="form-group">
+    <label for="nroCelular">Número de celular:</label>
+    <input type="text" class="form-control" id="nroCelular" value="{{ usuario.datosusuario.nroCelular }}" >
+</div>
