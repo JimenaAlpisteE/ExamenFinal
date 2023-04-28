@@ -1,0 +1,24 @@
+function finalizarTarea(idFinalizar) {
+  // Obtener el id de la tarea a partir de idFinalizar
+  const idTarea = idFinalizar.split('_')[1];
+  // Obtener el elemento de la celda del estado de la tarea
+  const estadoTarea = document.getElementById(`estado${idTarea}`);
+  // Actualizar el valor del estado de la tarea en el DOM
+  estadoTarea.innerHTML = 'Finalizada';
+
+  // Postear información al servidor para actualizar el estado de la tarea en la base de datos
+  fetch(`/finalizarTarea?idTarea=${idTarea}`, {
+    method: 'POST',
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest',
+      'X-CSRFToken': getCookie('csrftoken'),
+    },
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      // Refrescar la información de la tarea en el detalle de la tarea
+      capturarInformacionTarea(idTarea);
+    })
+    .catch(error => console.error(error));
+}
