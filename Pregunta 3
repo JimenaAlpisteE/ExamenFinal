@@ -1,0 +1,24 @@
+function editarUsuario(idEditar) {
+  // separar el id correspondiente
+  const id = idEditar.split("_")[1];
+
+  // consultar al servidor los datos del usuario
+  fetch(`/usuarios/${id}`)
+    .then(response => response.json())
+    .then(usuario => {
+      // llenar los inputs correspondientes
+      document.getElementById("cargaId").innerHTML = usuario.id;
+      document.getElementById("nombreEditar").value = usuario.nombre;
+      document.getElementById("apellidoEditar").value = usuario.apellido;
+      document.getElementById("emailEditar").value = usuario.email;
+      document.getElementById("celularEditar").value = usuario.celular;
+      document.getElementById("profesionEditar").value = usuario.profesion;
+      document.getElementById("fechaIngresoEditar").value = usuario.fechaIngreso;
+
+      // poner los campos no editables
+      document.getElementById("nombreEditar").readOnly = true;
+      document.getElementById("apellidoEditar").readOnly = true;
+      document.getElementById("emailEditar").readOnly = true;
+      document.getElementById("fechaIngresoEditar").readOnly = true;
+    });
+}
