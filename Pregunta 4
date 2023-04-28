@@ -1,0 +1,37 @@
+function actualizarUsuario() {
+  // Obtener el ID del usuario desde el tag H1 en la ventana modal
+  const cargaId = document.getElementById("cargaId");
+  const idUsuario = cargaId.innerHTML;
+
+  // Obtener los datos de los campos input en la ventana modal
+  const nroCelular = document.getElementById("editarNroCelular").value;
+  const profesionUsuario = document.getElementById("editarProfesion").value;
+
+  // Crear un objeto con los datos a enviar al servidor
+  const data = {
+    id: idUsuario,
+    nroCelular: nroCelular,
+    profesionUsuario: profesionUsuario
+  };
+
+  // Realizar una petición POST al servidor para actualizar la información del usuario
+  fetch("/actualizar_usuario", {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log("Respuesta del servidor:", data);
+      // Actualizar la información del usuario en la página
+      cargarDatosUsuario(idUsuario);
+      // Cerrar la ventana modal de editar usuario
+      $("#modalEditarUsuario").modal("hide");
+    })
+    .catch(error => {
+      console.error("Error al actualizar usuario:", error);
+      alert("Error al actualizar usuario. Por favor, inténtalo de nuevo.");
+    });
+}
