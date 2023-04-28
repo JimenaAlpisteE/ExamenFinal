@@ -1,0 +1,35 @@
+@login_required(login_url='/')
+def descargarReporteUsuarios(request):
+    # Obtener todos los usuarios del sistema
+    usuarios = User.objects.all()
+
+    # Crear un objeto canvas de ReportLab
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="reporte_usuarios.pdf"'
+    pdf_canvas = canvas.Canvas(response, pagesize=A4)
+
+    # Escribir el encabezado del reporte en el canvas
+    pdf_canvas.drawString(50, 800, "Reporte de usuarios")
+
+    # Iterar sobre todos los usuarios del sistema y escribir sus datos en el canvas
+    y = 750
+    for usuario in usuarios:
+        usuario_info = usuario.datosusuario
+        pdf_canvas.drawString(50, y, f"Nombre de usuario: {usuario.username}")
+        y -= 20
+        pdf_canvas.drawString(50, y, f"Nombre completo: {usuario.first_name} {usuario.last_name}")
+        y -= 20
+        pdf_canvas.drawString(50, y, f"Email: {usuario.email}")
+        y -= 20
+        pdf_canvas.drawString(50, y, f"Tipo de usuario: {usuario_info.tipoUsuario}")
+        y -= 20
+        pdf_canvas.drawString(50, y, f"Número de celular: {usuario_info.nroCelular}")
+        y -= 20
+        pdf_canvas.drawString(50, y, f"Profesión: {usuario_info.profesionUsuario}")
+        y -= 20
+        pdf_canvas.drawString(50, y, f"Perfil: {usuario_info.perfilUsuario}")
+        y -= 40
+
+    # Guardar y devolver el archivo pdf generado
+    pdf_canvas.save()
+    return response
